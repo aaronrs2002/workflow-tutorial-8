@@ -139,7 +139,7 @@ const MessageFeed = (props) => {
                                                 <React.Fragment>
                                                     <li className={content.indexOf(search.toLowerCase()) !== -1 ? "list-group-item list-group-item-dark active pointer" : "hide"} key={i} onClick={() => toggle("")}>{parse(post.title)}</li>
                                                     <div className="card">
-                                                        <div className="card-body">{parse(post.message)}</div>
+                                                        <div className="card-body">{parse(decodeURI(post.message))}</div>
                                                         <div className="card-body">
                                                             <label>{"Reply to " + parse(post.title)}</label>
                                                             <textarea className="form-control" rows="3" placeholder="Reply Message" name="replyMessage"></textarea>
