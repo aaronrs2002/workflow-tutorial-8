@@ -219,7 +219,7 @@ const Timeline = (props) => {
         </div>
         <div className="col-md-12">
             <div className="block" data-chart="timeline">
-                {(typeof currentData.series[0].data) === "object" && performingUpdate === false ?
+                {(typeof currentData.series[0].data) === "object" && performingUpdate === false && currentData.series[0].data ?
                     <ReactApexChart options={currentData.options} series={currentData.series} type="rangeBar" height={currentData.timelineHeight} width={window.innerWidth - 50} />
                     : <div className="loader"></div>}
             </div>
