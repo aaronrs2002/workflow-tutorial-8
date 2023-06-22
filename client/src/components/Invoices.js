@@ -248,9 +248,9 @@ const Invoices = (props) => {
                     }
                     let tempAmounts = [];
                     let tempLabels = [];
-                    let prepEventSum = parseFloat(0);
+                    let prepItemSum = parseFloat(0);
                     for (let i = 0; i < res.data.length; i++) {
-                        prepEventSum = parseFloat(prepEventSum) + parseFloat(res.data[i].preTaxTotal);
+                        prepItemSum = parseFloat(prepItemSum) + parseFloat(res.data[i].preTaxTotal);
                         if (tempLabels.indexOf(res.data[i].invoiceId) === -1) {
                             tempAmounts.push(parseFloat(res.data[i].preTaxTotal));
                             console.log("JSON.stringify(res.data[i]): " + JSON.stringify(res.data[i]));
@@ -262,7 +262,7 @@ const Invoices = (props) => {
                     }
                     setAmounts((amounts) => tempAmounts);
                     setLabels((labels) => tempLabels);
-                    setItemsSum((itemsSum) => prepEventSum);
+                    setItemsSum((itemsSum) => prepItemSum);
                     setSavedInvoices((savedInvoices) => res.data);
 
                 }, (error) => {
@@ -328,7 +328,7 @@ const Invoices = (props) => {
 
                  setAmounts((amounts) => tempAmounts);
                  setLabels((labels) => tempLabels);
-                 setItemsSum((itemsSum) => prepEventSum);
+                 setItemsSum((itemsSum) => prepItemSum);
                  setSavedInvoices((savedInvoices) => res.data);
  
              }, (error) => {
@@ -560,70 +560,3 @@ const Invoices = (props) => {
 }
 
 export default Invoices;
-
-/*
-
-
-
-
-{"invoiceId":"aaron@web-presence.biz:2023-06-15_AM-10-30:50",
-"itemizedList":[{"itemName":"balloons","itemPrice":3.99},{"itemName":"crayons","itemPrice":9.99},{"itemName":"boogers","itemPrice":3}],
-"preTaxTotal":"16.98","invoiceRecipient":" (name): Bootleggas (email): boiot@legga.com (phone): 2224445454 (address): 44 main (city): delta (state): AS (zipCode): 85260",
-"invoiceDueDate":"2023-11-04","ticketId":"2023-05-15_AM-09-58:33-due-2023-11-09:aaron@web-presence.biz:First ticket"}
-
-
-
-
-
-
-
-
-
-
-[{"invoiceId":"2023-03-20_AM-11:23:00:aaron@web-presence.biz:discofever",
-"itemizedList":[{"itemName":"web design","itemCategory":"marketing","itemPrice":34.99},{"itemName":"hosting","itemCategory":"marketing","itemPrice":33.99}],
-"preTaxTotal":"68.98",
-"invoiceRecipient":" (fname): Aaron (lname): Smith (email): aa@ww.com (phone): 222.222.2222 (address): 222 Mian (city): Dallas (state): OR (zipCode): 85211"
-,"invoiceDueDate":"2023-03-20"},
-
-{"invoiceId":"2023-03-21_PM-12:07:04:aaron@web-presence.biz:discofever",
-"itemizedList":[{"itemName":"Dog leash","itemCategory":"Entertainment","itemPrice":20.99},{"itemName":"Dog Biscuits","itemCategory":"Food","itemPrice":34.66},{"itemName":"Dog Food","itemCategory":"Food","itemPrice":50.99}],
-"preTaxTotal":"106.64",
-"invoiceRecipient":" (fname): Hank (lname): Smithy (email): hank@smithy.org (phone): 223.445.5454 (address): 234 Elm St. (city): Springfield (state): CA (zipCode): 85210",
-"invoiceDueDate":"01-06-02"},
-
-{"invoiceId":"2023-03-21_PM-14:15:33:aaron@web-presence.biz:no-specified-event",
-"itemizedList":[{"itemName":"Ham","itemCategory":"Food","itemPrice":23.99},{"itemName":"Milk","itemCategory":"food","itemPrice":2.99},{"itemName":"Bread","itemCategory":"Food","itemPrice":3.99}],
-"preTaxTotal":"30.97",
-"invoiceRecipient":" (fname): Safeway (lname): company-no-last-name (email): safeway@email.org (phone): 233.333.2323 (address): 123 Main Ave. (city): Springfield (state): AR (zipCode): 85525",
-"invoiceDueDate":"01-04-06"}]
-
-
-
-
-
-
-
-
-
-
- {itemizedCosts !== [] ? <div className="col-md-6"><BudgetChart amounts={itemizedCosts} labels={itemizedLabels} title={"Itemized Breakdown"} /></div> : null}
-invoice requirements:
-
-a unique identification number
-your company name, address and contact information
-the company name and address of the customer you’re invoicing
-a clear description of what you’re charging for
-the date the goods or service were provided (supply date)
-the date of the invoice
-the amount(s) being charged
-VAT amount if applicable
-the total amount owed
-
-        let theColors = ['#F44336', '#E91E63', '#9C27B0', '#008FFB', '#00E396', '#775DD0', '#00E396', '#ED6E5F', '#B0EBF7', '#E1C366', "#AB63F7", "#C3EDBB"];
-        if (props.title === "Breakdown by Event") {
-
-            theColors = ['##B5F021', '##07F730', '#9C27B0', '##12E0CF', '##BED5FA', '##6826F0', '##E9F04D', '##60F7ED', '##A863E0', '##FAC6AA', "#E3F07D", "#F78060"];
-        }
-
-*/
