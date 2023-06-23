@@ -203,10 +203,66 @@ const WorkFlow = (props) => {
                             e.selectedIndex = 0;
                         });
                     }
-                    window.location = "#messageBoard";
-                    document.querySelector("[name='messageTitle']").value = props.userEmail + " made a/an " + func;
-                    document.querySelector("[name='message']").value = props.userEmail + " just performed a step " + func + " at " + timestamp();
-                    props.showAlert("Success. Would you like to post this mesage?", "success");
+
+
+                    //OPTION 1
+
+                    axios.put("/api/workflow/update-workflow/", { ticketId: whichTicket, stepsData: JSON.stringify(tempStepData) }, props.config).then(
+                        (res) => {
+                            if (res.data.affectedRows === 0) {
+                                props.showAlert("Update failed.", "warning");
+                            } else {
+                                setActiveStep((activeStep) => []);
+                                populateFields();
+                                if (document.querySelector("[stepTitle]")) {
+                                    document.querySelector("[stepTitle]").value = "";
+                                    document.querySelector("[stepPrice]").value = "";
+                                    [].forEach.call(document.querySelectorAll("select[data-selector='date']"), (e) => {
+                                        e.selectedIndex = 0;
+                                    });
+                                }
+
+                                let newData = {
+                                    ticketId: whichTicket,
+                                    title: encodeURIComponent(props.userEmail + " " + func + "ed ticket: " + whichTicket.substring(whichTicket.lastIndexOf(":") + 1, whichTicket.length).replace(/[!'()*]/g, escape) + ": " + timestamp()),
+                                    message: encodeURIComponent(props.userEmail + " just performed a step " + func)
+                                }
+                                axios.post("api/messages/post-message/", newData, props.config).then(
+                                    (res) => {
+                                        if (res.data.affectedRows === 0) {
+                                            props.showAlert("That did not post.", "warning");
+                                        } else {
+
+                                            document.querySelector("[name='messageTitle']").value = ""
+                                            document.querySelector("[name='message']").value = "";
+                                            props.showAlert("A message was posted regarding your update.", "success");
+                                            props.getTickets(props.userEmail);
+                                        }
+                                    }, (error) => {
+                                        props.showAlert("There was an error: " + error, "danger");
+                                    }
+                                )
+
+
+                            }
+                        }, (error) => {
+                            console.log(error);
+                            props.showAlert("Your submission did not go through.", "danger");
+                        }
+                    );
+
+
+
+                    //OPTION 2
+                    /*  window.location = "#messageBoard";
+                       document.querySelector("[name='messageTitle']").value = props.userEmail + " made a/an " + func;
+                       document.querySelector("[name='message']").value = props.userEmail + " just performed a step " + func + " at " + timestamp();
+                       props.showAlert("Success. Would you like to post this mesage?", "success");
+   */
+
+
+
+
                 }
             }, (error) => {
                 console.log(error);
@@ -571,28 +627,3 @@ const WorkFlow = (props) => {
 }
 
 export default WorkFlow;
-
-/*
-test dates:
-first ticket :may 14 - nov 8
- - ID-issue: july 4 - july 14
- - review: june 16 - june 17
- - prototyping: july 31 - Aug 13
- - analyze: august 31 - Sept 6
-
-wednesdayTicket = may 23 -july 3
-
-    - newWednesday 
-
-AnotherTry:  here may 23 - feb 16 2024
-yearLongProject: june 6 - August 7
-
-blah: june 6 - Oct 30
-
-
-
-
-
-
-
-*/
