@@ -3,8 +3,8 @@ let localData = [{
     "plannerInfo": {
         "Name": "Aaron Smith",
         "address": "USA",
-        "phone": "480.256.9836",
-        "url": "https://web-presence.biz/?user=exclude&",
+        "phone": "555.555.5555",
+        "url": "https://web-presence.biz/",
         "company": "Web-Presence LLC",
         "logo": "https://web-presence.biz/img/MA_Logo.png",
         "companyEmail": "aaron@web-presence.biz",
