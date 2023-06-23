@@ -212,15 +212,8 @@ const WorkFlow = (props) => {
                             if (res.data.affectedRows === 0) {
                                 props.showAlert("Update failed.", "warning");
                             } else {
-                                setActiveStep((activeStep) => []);
-                                populateFields();
-                                if (document.querySelector("[stepTitle]")) {
-                                    document.querySelector("[stepTitle]").value = "";
-                                    document.querySelector("[stepPrice]").value = "";
-                                    [].forEach.call(document.querySelectorAll("select[data-selector='date']"), (e) => {
-                                        e.selectedIndex = 0;
-                                    });
-                                }
+
+
 
                                 let newData = {
                                     ticketId: whichTicket,
@@ -242,6 +235,17 @@ const WorkFlow = (props) => {
                                         props.showAlert("There was an error: " + error, "danger");
                                     }
                                 )
+
+                                setActiveStep((activeStep) => []);
+                                populateFields();
+                                if (document.querySelector("[stepTitle]")) {
+                                    document.querySelector("[stepTitle]").value = "";
+                                    document.querySelector("[stepPrice]").value = "";
+                                    [].forEach.call(document.querySelectorAll("select[data-selector='date']"), (e) => {
+                                        e.selectedIndex = 0;
+                                    });
+                                }
+
 
 
                             }
