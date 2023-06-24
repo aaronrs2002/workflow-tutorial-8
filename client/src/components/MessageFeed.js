@@ -53,25 +53,35 @@ const MessageFeed = (props) => {
     //CLIENT SIDE UPDATE MESSAGE
     const updateMessage = (whichMessage) => {
 
-        console.log("JSON.stringify(props.feed): " + JSON.stringify(props.feed) + " - whichMessage: " + whichMessage);
-        let updateData = {
-            title: encodeURIComponent(props.feed[whichMessage].title).replace(/[!'()*]/g, escape),
-            message: encodeURIComponent(props.feed[whichMessage].message.replace(/[!'()*]/g, escape) + "<br/> " + timestamp() + ":" + props.userEmail + ":" + document.querySelector("textarea[name='replyMessage']").value.replace(/[!'()*]/g, escape))
-        }
+        Validate(["replyMessage"]);
+        if (document.querySelector(".error")) {
+            props.showAlert("What is your message?", "warning");
+            return false;
+        } else {
 
-        axios.put("/api/messages/edit-message/", updateData, props.config).then(
-            (res) => {
-                if (res.data.affectedRows === 0) {
-                    props.showAlert("That did not work.", "warning");
-                } else {
-                    props.getMessages(props.activeTicket);
-                    setSearch((search) => "");
-                    document.querySelector("textarea[name='replyMessage']").value = "";
-                }
-            }, (error) => {
-                props.showAlert("There was an error: " + error, "danger");
+
+
+            console.log("JSON.stringify(props.feed): " + JSON.stringify(props.feed) + " - whichMessage: " + whichMessage);
+            let updateData = {
+                title: encodeURIComponent(props.feed[whichMessage].title).replace(/[!'()*]/g, escape),
+                message: encodeURIComponent(props.feed[whichMessage].message.replace(/[!'()*]/g, escape) + "<br/> " + timestamp() + ":" + props.userEmail + ":" + document.querySelector("textarea[name='replyMessage']").value.replace(/[!'()*]/g, escape))
             }
-        )
+
+            axios.put("/api/messages/edit-message/", updateData, props.config).then(
+                (res) => {
+                    if (res.data.affectedRows === 0) {
+                        props.showAlert("That did not work.", "warning");
+                    } else {
+                        props.getMessages(props.activeTicket);
+                        setSearch((search) => "");
+                        document.querySelector("textarea[name='replyMessage']").value = "";
+                    }
+                }, (error) => {
+                    props.showAlert("There was an error: " + error, "danger");
+                }
+            )
+
+        }
 
     }
     //2023-05-24_AM-10-42%3A31%3Aaaron%40web-presence.biz%3Alet%27s%20test
