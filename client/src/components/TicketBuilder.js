@@ -43,17 +43,19 @@ const TicketBuilder = (props) => {
         axios.get("api/tickets/grab-ticket/" + whichTicket, props.config).then(
             (res) => {
 
+                if (document.querySelector("[name='ticketTitle']")) {
+                    document.querySelector("[name='ticketTitle']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf(":") + 1);
+                    document.querySelector("[name='ticketInfo']").value = res.data[0].ticketInfo;
+                    document.querySelector("[name='priority']").value = res.data[0].priority;
+                    document.querySelector("[name='bugNewFeature']").value = res.data[0].bugNewFeature;
+                    document.querySelector("[name='assignedTo']").value = res.data[0].assignedTo;
 
-                document.querySelector("[name='ticketTitle']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf(":") + 1);
-                document.querySelector("[name='ticketInfo']").value = res.data[0].ticketInfo;
-                document.querySelector("[name='priority']").value = res.data[0].priority;
-                document.querySelector("[name='bugNewFeature']").value = res.data[0].bugNewFeature;
-                document.querySelector("[name='assignedTo']").value = res.data[0].assignedTo;
 
+                    document.querySelector("[name='due-select-year']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf("-due-") + 5).substring(0, 4);
+                    document.querySelector("[name='due-select-month']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf("-due-") + 5).substring(5, 7);
+                    document.querySelector("[name='due-select-day']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf("-due-") + 5).substring(8, 10);
 
-                document.querySelector("[name='due-select-year']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf("-due-") + 5).substring(0, 4);
-                document.querySelector("[name='due-select-month']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf("-due-") + 5).substring(5, 7);
-                document.querySelector("[name='due-select-day']").value = res.data[0].ticketId.substring(res.data[0].ticketId.lastIndexOf("-due-") + 5).substring(8, 10);
+                }
 
 
                 props.getMessages(whichTicket);
@@ -141,6 +143,7 @@ const TicketBuilder = (props) => {
 
     const deleteTicket = () => {
         let whichTicket = document.querySelector("[name='ticketList']").value;
+        console.log("whichTicket: " + whichTicket)
         if (whichTicket === "default") {
             return false;
         }
