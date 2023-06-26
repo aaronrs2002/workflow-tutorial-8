@@ -61,8 +61,6 @@ LEFT JOIN  workflowTaskmanager.messages
 ON tickets.ticketId = workflowTaskmanager.messages.ticketId     
 LEFT JOIN   workflowTaskmanager.workflow 
 ON workflowTaskmanager.messages.ticketId = workflowTaskmanager.workflow.ticketId   
-LEFT JOIN   workflowTaskmanager.invoices 
-ON workflowTaskmanager.invoices.ticketId = workflowTaskmanager.invoices.ticketId   
 SET 
 tickets.ticketInfo = '${req.body.ticketInfo}', 
 tickets.priority = '${req.body.priority}',
@@ -70,8 +68,7 @@ tickets.bugNewFeature = '${req.body.bugNewFeature}',
 tickets.assignedTo = '${req.body.assignedTo}', 
 tickets.ticketId = '${req.body.ticketId}',
 workflowTaskmanager.messages.ticketId = tickets.ticketId,
-workflowTaskmanager.workflow.ticketId = tickets.ticketId,
-workflowTaskmanager.invoices.ticketId = tickets.ticketId
+workflowTaskmanager.workflow.ticketId = tickets.ticketId
 WHERE tickets.ticketId = '${req.body.originalTitle}'`;
 
 
@@ -84,7 +81,7 @@ WHERE tickets.ticketId = '${req.body.originalTitle}'`;
     });
 });
 //begin edit
-
+//workflowTaskmanager.invoices.ticketId = '${req.body.ticketId}'
 
 //SERVER SIDE DELETE TICKET
 router.delete("/delete-ticket/:ticketId", checkToken, (req, res) => {
