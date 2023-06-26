@@ -43,4 +43,19 @@ router.get("/get-invoices/:ticketId", checkToken, (req, res) => {
     })
 });
 
+
+//SERVER SIDE UPDATE INVOICE NAME
+router.put("/update-invoices-ticketId/", checkToken, (req, res) => {
+    let sql = `UPDATE invoices SET ticketId = '${req.body.ticketId}' WHERE ticketId = '${req.body.originalId}'`
+    let query = db.query(sql, (err, result) => {
+        if (err) {
+            console.log("Error :" + err);
+        } else {
+            res.send(result);
+        }
+    })
+});
+
+
+
 module.exports = router;
