@@ -37,6 +37,11 @@ const Nav = (props) => {
                 <li className={props.activeModule === "invoices" ? "nav-item active" : "nav-item"}>
                     <a className="nav-link" href="#" onClick={() => toggleMobileNav("invoices")}>Invoices</a>
                 </li>
+                <li className={props.activeModule === "clockInOut" ? "nav-item active" : "nav-item"}>
+                    <a className="nav-link" href="#" onClick={() => toggleMobileNav("clockInOut")}>Clock InOut</a>
+                </li>
+
+
             </ul>
         </div>
     </nav>)
