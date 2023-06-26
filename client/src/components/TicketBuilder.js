@@ -103,6 +103,12 @@ const TicketBuilder = (props) => {
     }
 
     const editTicket = () => {
+        let whichTicket = document.querySelector("[name='ticketList']").value;
+        if (whichTicket === "default") {
+            props.showAlert("Which ticket?", "warning");
+            return false;
+        }
+
         Validate(["ticketTitle", "ticketInfo", "priority", "bugNewFeature", "assignedTo", "due-select-year", "due-select-month", "due-select-day"]);
         if (document.querySelector(".error")) {
             props.showAlert("You are missing fields information.", "danger");
@@ -125,8 +131,10 @@ const TicketBuilder = (props) => {
 
                     if (res.data.affectedRows >= 1) {
                         props.showAlert(document.querySelector("[name='ticketTitle']").value + " updated.", "success");
+                        sessionStorage.removeItem("activeTicket");
                         props.getTickets(props.userEmail);
                         resetFunction("edit");
+                        props.getMessages("reset");
                     } else {
                         props.showAlert("Something went wrong", "danger");
                     }
@@ -143,7 +151,7 @@ const TicketBuilder = (props) => {
 
     const deleteTicket = () => {
         let whichTicket = document.querySelector("[name='ticketList']").value;
-        console.log("whichTicket: " + whichTicket)
+
         if (whichTicket === "default") {
             return false;
         }
@@ -151,10 +159,12 @@ const TicketBuilder = (props) => {
 
             (res) => {
                 if (res.data.affectedRows > 0) {
+                    sessionStorage.removeItem("activeTicket");
                     props.showAlert("Success in deleting.", "info");
                     props.getTickets(props.userEmail);
                     resetFunction("delete");
                     setConfirm((confirm) => "");
+
                 } else {
                     props.showAlert("That did not work.", "danger");
                 }
