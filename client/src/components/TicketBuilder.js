@@ -102,6 +102,28 @@ const TicketBuilder = (props) => {
 
     }
 
+    const updateInvoices = (newTicketId, originalTicketId) => {
+        let updateObj = {
+            ticketId: newTicketId,
+            originalId: originalTicketId
+        }
+
+        axios.put("/api/invoices/update-invoices-ticketId/", updateObj, props.config).then(
+            (res) => {
+                if (res.data.affectedRows >= 1) {
+                    console.log("Invoices updated: " + JSON.stringify(res.data));
+
+                } else {
+                    props.showAlert("Invoice tickedIds did not update.", "danger");
+                }
+
+            }, (error) => {
+
+            }
+        )
+
+    }
+
     const editTicket = () => {
         let whichTicket = document.querySelector("[name='ticketList']").value;
         if (whichTicket === "default") {
@@ -135,6 +157,10 @@ const TicketBuilder = (props) => {
                         props.getTickets(props.userEmail);
                         resetFunction("edit");
                         props.getMessages("reset");
+
+
+                        updateInvoices(ticketEdit, props.activeTicket);
+
                     } else {
                         props.showAlert("Something went wrong", "danger");
                     }
