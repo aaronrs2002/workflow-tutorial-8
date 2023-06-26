@@ -12,7 +12,7 @@ import WorkFlow from "./components/WorkFlow";
 import MessageFeed from "./components/MessageFeed";
 import Timeline from "./components/Timeline";
 import Invoices from "./components/Invoices";
-import ClockInOut from "./components/ClockInOut";
+
 
 function App() {
   let [loaded, setLoaded] = useState(false);
@@ -229,7 +229,7 @@ function App() {
             {activeModule === "ticketBuilder" ? <TicketBuilder ticketInfo={ticketInfo} showAlert={showAlert} config={config} userEmail={userEmail} getTickets={getTickets} setActiveTicket={setActiveTicket} activeTicket={activeTicket} getMessages={getMessages} /> : null}
             {activeModule === "invoices" ? <Invoices ticketInfo={ticketInfo} showAlert={showAlert} config={config} userEmail={userEmail} getTickets={getTickets} setActiveTicket={setActiveTicket} activeTicket={activeTicket} getMessages={getMessages} /> : null}
 
-            {activeModule === "clockInOut" ? <ClockInOut ticketInfo={ticketInfo} showAlert={showAlert} config={config} userEmail={userEmail} getTickets={getTickets} setActiveTicket={setActiveTicket} activeTicket={activeTicket} getMessages={getMessages} /> : null}
+
             {activeTicket !== null ? <MessageFeed showAlert={showAlert} config={config} userEmail={userEmail} activeTicket={activeTicket} feed={feed} getMessages={getMessages} /> : <h2>Select a ticket to post a message.</h2>}
           </div>
           <footer className="footer mt-auto py-3 px-3 bg-dark text-muted">
